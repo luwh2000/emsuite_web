@@ -1,0 +1,8 @@
+<h1>Upload a Cryo-EM File</h1>
+<form action="/upload/" method="post">
+  <label for="mrc_file">Cryo-EM File:</label>
+  <input type="file" id="mrc_file" accept=".mrc,.gz" required>
+  <label for="contour">Contour:</label>
+  <input type="number" id="contour" min=0>
+  <input type="submit" value="OK">
+</form>

@@ -1,0 +1,173 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="bg-light">
+  <div class="container py-5">
+    <h1 class="display-4">Submit a Cryo-EM Job</h1>
+    <div class="row">
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_emap2sec' %}">
+          Emap2Sec
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_emap2sec+' %}">
+          Emap2Sec+
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-primary btn-lg btn-block" href="{% url 'new_mainmast' %}">
+          MAINMAST
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_mainmastseg' %}">
+          MAINMASTseg
+        </a>
+      </div>
+    </div>
+    <div class="container border shadow-sm bg-white py-4 px-5">
+      <form class="needs-validation" action="{% url 'new_emap2sec' %}" method="post" enctype="multipart/form-data"
+        novalidate>
+        {% csrf_token %}
+        <legend>General</legend>
+        <hr>
+        <label class="required" data-toggle="tooltip" title="Choose a Situs file to run MAIMAST on">Cryo-EM File</label>
+        <div class="form-group">
+          <div class="custom-file">
+            <input class="custom-file-input" type="file" id="situs_file" name="situs_file" accept=".situs" required>
+            <label class="custom-file-label" for="situs_file">Choose file (.situs)</label>
+            <div class="invalid-feedback">
+              Please select a Situs file.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="required" for="name" data-toggle="tooltip" title="User-defined name">Job Name</label>
+          <input class="form-control" type="text" id="name" name="name" required>
+          <div class="invalid-feedback">
+            Please name the job.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="comment" data-toggle="tooltip" title="Extra details about the job">Comment</label>
+          <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+        </div>
+        <legend>Model Parameters</legend>
+        <hr>
+        <legend>
+          <small><strong data-toggle="tooltip"
+              title="The mean shift algorithm is used to identify local dense points">LDP
+              Identification</strong></small>
+        </legend>
+        <div class="form-group">
+          <label class="required" for="gw" data-toggle="tooltip" title="&sigma; &equals; 0.5&times;<u>gw</u>">Gaussian
+            Kernel
+            Bandwidth
+            <small>(gw)</small></label>
+          <input class="form-control" type="number" id="gw" name="gw" min="0" value="2.0" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="t" data-toggle="tooltip"
+            title="Grid points with density &gt; <u>t</u> are selected to be seed points">Grid Point Density Threshold
+            <small>(t)</small></label>
+          <input class="form-control" type="number" id="t" name="t" min="0" value="0.0" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="allow" data-toggle="tooltip"
+            title="Maximum shift distance allowed during mean shifting">Maximum Shift
+            Distance <small>(allow)</small></label>
+          <input class="form-control" type="number" id="allow" name="allow" min="0" value="10.0" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="filter" data-toggle="tooltip"
+            title="Seed points with normalized density below <u>filter</u> are discarded">Seed Point Density Threshold
+            <small>(filter)</small></label>
+          <input class="form-control" type="number" id="filter" name="filter" min="0" max="1" value="0.1" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="merge" data-toggle="tooltip"
+            title="Iteratively merge seed points closer than <u>merge</u> &#8491; apart">Merge Threshold
+            <small>(merge)</small></label>
+          <input class="form-control" type="number" id="merge" name="merge" min="0" value="0.5" required>
+        </div>
+        <hr>
+        <legend>
+          <small><strong data-toggle="tooltip" title="A minimum spanning tree is constructed to connect LDPs">MST
+              Construction</strong></small>
+        </legend>
+        <div class="form-group">
+          <label class="required" for="rlocal" data-toggle="tooltip"
+            title="Radius (in &#8491;) of each point's local MST">Local MST Radius <small>(Rlocal)</small></label>
+          <input class="form-control" type="number" id="rlocal" name="rlocal" min="0" value="10" required>
+        </div>
+        <hr>
+        <legend>
+          <small><strong data-toggle="tooltip" title="A tabu search">MST
+              Refinement</strong></small>
+        </legend>
+        <div class="form-group">
+          <label class="required" for="nround" data-toggle="tooltip" title="Number of refinement iterations">Iteration
+            Count <small>(Nround)</small></label>
+          <input class="form-control" type="number" id="nround" name="nround" min="0" value="5000" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="nnb" data-toggle="tooltip"
+            title="Number of edge replacements tried each iteration">Candidates
+            per Iteration <small>(Nnb)</small></label>
+          <input class="form-control" type="number" id="nnb" name="nnb" min="1" value="30" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="ntb" data-toggle="tooltip" title="Maximum number of edges in the tabu list">Tabu
+            List Size <small>(Ntb)</small></label>
+          <input class="form-control" type="number" id="ntb" name="ntb" min="0" value="100" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="dkeep" data-toggle="tooltip"
+            title="Removed edges must have length &gt; <u>Dkeep</u> &#8491;">Edge Length Threshold
+            <small>(Dkeep)</small></label>
+          <input class="form-control" type="number" id="dkeep" name="dkeep" min="0" value="0.5" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="Const" data-toggle="tooltip"
+            title="New tree must have total length &leq; <u>Const</u> &times; W(MST)">Tree Length Constraint
+            <small>(Const)</small></label>
+          <input class="form-control" type="number" id="Const" name="Const" min="0" value="1.01" required>
+        </div>
+        <hr>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // enable tooltips
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip({
+      html: true
+    });
+  });
+</script>
+
+<script>
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+
+{% endblock %}

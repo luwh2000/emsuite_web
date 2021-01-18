@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="position-relative overflow-hidden p-3">
+  <div class="p-lg-5 p-3 my-5">
+    <h1 class="display-4 font-weight-normal">Cryo-EM Suite</h1>
+    <p class="lead pb-3">A suite of programs developed to accurately identify structures in cryo-EM maps.</p>
+    <a href="{% url 'new_job' %}" class="btn btn-primary">Get Started</a>
+    <a href="{% url 'about' %}" class="btn btn-outline-primary">Learn More</a>
+  </div>
+</div>
+
+<div class="bg-light py-5">
+  <div class="container">
+    <h1 class="text-center pb-2">Tools Included</h1>
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="col my-2">
+        <div class="card card-link h-100">
+          <a href="{% url 'new_emap2sec' %}" class="stretched-link"></a>
+          <div class="row no-gutters h-100">
+            <div class="col-md-4">
+              <img src="{% static 'emap2sec.png' %}" class="card-img">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Emap2Sec</h5>
+                <p class="card-text">Identify secondary structures (&alpha; helices, &beta;
+                  sheets, coils/turns) in a low to medium resolution cryo-EM map using deep learning.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col my-2">
+        <div class="card card-link h-100">
+          <a href="{% url 'new_mainmast' %}" class="stretched-link"></a>
+          <div class="row no-gutters h-100">
+            <div class="col-md-4">
+              <img src="{% static 'mainmast.png' %}" class="card-img">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">MAINMAST</h5>
+                <p class="card-text">Build reliable candidate C&alpha; models from a near-atomic resolution cryo-EM
+                  map without reference structures or manual intervention.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col my-2">
+        <div class="card card-link h-100">
+          <a href="{% url 'new_emap2sec+' %}" class="stretched-link"></a>
+          <div class="row no-gutters h-100">
+            <div class="col-md-4">
+              <img src="{% static 'emap2secplus.png' %}" class="card-img">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Emap2Sec+</h5>
+                <p class="card-text">Identify secondary structures and nucleic acids (RNA/DNA) in
+                  a low to medium resolution cryo-EM map using deep learning.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col my-2">
+        <div class="card card-link h-100">
+          <a href="{% url 'new_mainmastseg' %}" class="stretched-link"></a>
+          <div class="row no-gutters h-100">
+            <div class="col-md-4">
+              <img src="{% static 'mainmastseg.png' %}" class="card-img">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">MAINMASTseg</h5>
+                <p class="card-text">Segment a near-atomic resolution cryo-EM map with symmetry constraints into
+                  several constituent density maps.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

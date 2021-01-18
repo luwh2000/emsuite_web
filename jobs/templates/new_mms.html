@@ -1,0 +1,144 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="bg-light">
+  <div class="container py-5">
+    <h1 class="display-4">Submit a Cryo-EM Job</h1>
+    <div class="row">
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_emap2sec' %}">
+          Emap2Sec
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_emap2sec+' %}">
+          Emap2Sec+
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_mainmast' %}">
+          MAINMAST
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-primary btn-lg btn-block" href="{% url 'new_mainmastseg' %}">
+          MAINMASTseg
+        </a>
+      </div>
+    </div>
+    <div class="container border shadow-sm bg-white py-4 px-5">
+      <form class="needs-validation" action="{% url 'new_emap2sec' %}" method="post" enctype="multipart/form-data"
+        novalidate>
+        {% csrf_token %}
+        <legend>General</legend>
+        <hr>
+        <label class="required" data-toggle="tooltip" title="Choose an MRC file to run MAIMASTseg on">Cryo-EM
+          File</label>
+        <div class="form-group">
+          <div class="custom-file">
+            <input class="custom-file-input" type="file" id="mrc_file" name="mrc_file" accept=".mrc" required>
+            <label class="custom-file-label" for="mrc_file">Choose file (.mrc)</label>
+            <div class="invalid-feedback">
+              Please select an MRC file.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="required" for="name" data-toggle="tooltip" title="User-defined name">Job Name</label>
+          <input class="form-control" type="text" id="name" name="name" required>
+          <div class="invalid-feedback">
+            Please name the job.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="comment" data-toggle="tooltip" title="Extra details about the job">Comment</label>
+          <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+        </div>
+        <legend>Model Parameters</legend>
+        <hr>
+        <legend>
+          <small><strong data-toggle="tooltip"
+              title="The mean shift algorithm is used to identify local dense points">LDP
+              Identification</strong></small>
+        </legend>
+        <div class="form-group">
+          <label class="required" for="g" data-toggle="tooltip" title="&sigma; &equals; 0.5&times;<u>g</u>">Gaussian
+            Kernel Bandwidth <small>(g)</small></label>
+          <input class="form-control" type="number" id="g" name="g" min="0" value="2.0" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="t" data-toggle="tooltip"
+            title="Grid points with density &gt; <u>t</u> are selected to be seed points">Grid Point Density Threshold
+            <small>(t)</small></label>
+          <input class="form-control" type="number" id="t" name="t" min="0" value="0.0" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="f" data-toggle="tooltip"
+            title="Seed points with normalized density below <u>f</u> are discarded">Seed Point Density Threshold
+            <small>(f)</small></label>
+          <input class="form-control" type="number" id="f" name="f" min="0" max="1" value="0.1" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="m" data-toggle="tooltip"
+            title="Iteratively merge seed points closer than <u>m</u> &#8491; apart">Merge Threshold
+            <small>(m)</small></label>
+          <input class="form-control" type="number" id="m" name="m" min="0" value="0.5" required>
+        </div>
+        <hr>
+        <legend>
+          <small><strong data-toggle="tooltip" title="A minimum spanning tree is constructed to connect LDPs">MST
+              Construction</strong></small>
+        </legend>
+        <div class="form-group">
+          <label class="required" for="r" data-toggle="tooltip"
+            title="Radius (in &#8491;) of each point's local MST">Local MST Radius <small>(R)</small></label>
+          <input class="form-control" type="number" id="r" name="r" min="0" value="10" required>
+        </div>
+        <hr>
+        <legend>
+          <small><strong data-toggle="tooltip" title="A tabu search">MST
+              Refinement</strong></small>
+        </legend>
+        <div class="form-group">
+          <label class="required" for="k" data-toggle="tooltip"
+            title="Removed edges must have length &gt; <u>k</u> &#8491;">Edge Length Threshold
+            <small>(k)</small></label>
+          <input class="form-control" type="number" id="k" name="k" min="0" value="0.5" required>
+        </div>
+        <hr>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // enable tooltips
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip({
+      html: true
+    });
+  });
+</script>
+
+<script>
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+
+{% endblock %}

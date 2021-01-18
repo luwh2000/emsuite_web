@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% load job_tags %}
+{% load emap2sec_tags %}
+
+<div class="container py-5">
+    <h1 class="display-4">Success!</h1>
+    <p>Your Emap2Sec job <b>{{ job.name }}</b> {% status_badge job.status %} has been submitted.</p>
+
+    <dl class="row">
+
+        <dt class="col-sm-3">Job ID</dt>
+        <dd class="col-sm-9">{{ job.id }}</dd>
+
+        <dt class="col-sm-3">MRC File</dt>
+        <dd class="col-sm-9"><a href="{{ job.mrc_file.url }}">{{ job.mrc_filename }}</a></dd>
+
+        <dt class="col-sm-3">Submission Time</dt>
+        {% load tz %}
+        {% localtime on %}
+        {% get_current_timezone as TIME_ZONE %}
+        <dd class="col-sm-9">{{ job.time_sub }} {{ TIME_ZONE }}</dd>
+        {% endlocaltime %}
+
+        <dt class="col-sm-3">Contour</dt>
+        <dd class="col-sm-9">{{ job.contour }}</dd>
+
+        <dt class="col-sm-3">Stride Size</dt>
+        <dd class="col-sm-9">{{ job.sstep }}</dd>
+
+        <dt class="col-sm-3">Sliding Cube Size</dt>
+        <dd class="col-sm-9">{{ job.vw }}</dd>
+
+        <dt class="col-sm-3">Density Normalization</dt>
+        <dd class="col-sm-9">{% norm_string job %}</dd>
+    </dl>
+
+    <a class="btn btn-outline-primary" href="{% url 'new_job' %}">Submit another job</a>
+    <a class="btn btn-outline-primary" href="{{ viewUrl }}">Check job status</a>
+</div>
+{% endblock %}

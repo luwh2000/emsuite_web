@@ -1,0 +1,125 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="bg-light">
+  <div class="container py-5">
+    <h1 class="display-4">Submit a Cryo-EM Job</h1>
+    <div class="row">
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_emap2sec' %}">
+          Emap2Sec
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-primary btn-lg btn-block" href="{% url 'new_emap2sec+' %}">
+          Emap2Sec+
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_mainmast' %}">
+          MAINMAST
+        </a>
+      </div>
+      <div class="col py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'new_mainmastseg' %}">
+          MAINMASTseg
+        </a>
+      </div>
+    </div>
+    <ul class="nav nav-tabs nav-fill">
+      <li class="nav-item" data-toggle="tooltip" title="Detect secondary structures from a cryo-EM map">
+        <a class="nav-link active" href="#">Detect</a>
+      </li>
+      <li class="nav-item" data-toggle="tooltip" title="Provide a PDB file to evaluate model performance">
+        <a class="nav-link" href="#">Evaluate</a>
+      </li>
+    </ul>
+    <div class="container border-left border-right border-bottom shadow-sm bg-white py-4 px-5">
+      <form class="needs-validation" action="{% url 'new_emap2sec' %}" method="post" enctype="multipart/form-data"
+        novalidate>
+        {% csrf_token %}
+        <legend>General</legend>
+        <hr>
+        <label class="required" data-toggle="tooltip"
+          title="Choose an MRC file to run Emap2Sec+ on (may be gzipped)">Cryo-EM File</label>
+        <div class="form-group">
+          <div class="custom-file">
+            <input class="custom-file-input" type="file" id="mrc_file" name="mrc_file" accept=".mrc,.gz" required>
+            <label class="custom-file-label" for="mrc_file">Choose file (.mrc, .gz)</label>
+            <div class="invalid-feedback">
+              Please select an MRC file (may be gzipped).
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="required" for="name" data-toggle="tooltip" title="User-defined name">Job Name</label>
+          <input class="form-control" type="text" id="name" name="name" required>
+          <div class="invalid-feedback">
+            Please name the job.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="comment" data-toggle="tooltip" title="Extra details about the job">Comment</label>
+          <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+        </div>
+        <legend>Model Parameters</legend>
+        <hr>
+        <div class="form-group">
+          <label class="required" for="contour" data-toggle="tooltip"
+            title="The level of isosurface to generate density values for">Contour Level
+            <small>(contour)</small></label>
+          <input class="form-control" type="number" id="contour" name="contour" min="0" value="0" required>
+        </div>
+        <div class="form-group">
+          <label class="required" for="type" data-toggle="tooltip" title="Determines which model will be used">Cryo-EM
+            Map Type
+            <small>(type)</small></label>
+          <select class="form-control" id="type" name="type">
+            <option value="0">Simulated (6 Å)</option>
+            <option value="1">Simulated (6-10 Å)</option>
+            <option value="2">Simulated (10 Å)</option>
+            <option selected value="3">Experimental</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" checked class="custom-control-input" id="resize" name="resize">
+            <label class="custom-control-label" for="resize" data-toggle="tooltip"
+              title="Do not enable if the map grid size is smaller than 1">Optimize Map Resizing (resize)</label>
+          </div>
+        </div>
+        <hr>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // enable tooltips
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+<script>
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+
+{% endblock %}
