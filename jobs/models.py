@@ -13,6 +13,7 @@ STATUSES = (
 
 # Create your models here.
 
+
 class Emap2SecJob(models.Model):
 
     NORMS = (
@@ -31,12 +32,14 @@ class Emap2SecJob(models.Model):
     comment = models.TextField('Comment', default='', blank=True)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
-    mrc_file = models.FileField('MRC File', upload_to=settings.MEDIA_ROOT, null=True)
+    mrc_file = models.FileField('MRC File', upload_to='emap2sec', null=True)
     mrc_filename = models.CharField('MRC Filename', max_length=260, default='')
     contour = models.FloatField('Contour Level', default=0.0)
     sstep = models.PositiveSmallIntegerField('Stride Step', default=2)
     vw = models.PositiveSmallIntegerField('Sliding Cube Size', default=5)
-    norm = models.PositiveSmallIntegerField('Density Normalization', choices=NORMS, default=1)
+    norm = models.PositiveSmallIntegerField(
+        'Density Normalization', choices=NORMS, default=1)
+
 
 class Emap2SecPlusJob(models.Model):
 
@@ -44,12 +47,14 @@ class Emap2SecPlusJob(models.Model):
         verbose_name = 'Emap2Sec+ Job'
         verbose_name_plural = 'Emap2Sec+ Jobs'
         db_table = 'emap2sec_plus'
-    
+
     id = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
-    mrc_file = models.FileField('MRC File', upload_to=settings.MEDIA_ROOT, null=True)
+    mrc_file = models.FileField(
+        'MRC File', upload_to='emap2secplus', null=True)
     mrc_filename = models.CharField('MRC Filename', max_length=260, default='')
+
 
 class MainmastJob(models.Model):
 
@@ -61,8 +66,9 @@ class MainmastJob(models.Model):
     id = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
-    mrc_file = models.FileField('MRC File', upload_to=settings.MEDIA_ROOT, null=True)
+    mrc_file = models.FileField('MRC File', upload_to='mainmast', null=True)
     mrc_filename = models.CharField('MRC Filename', max_length=260, default='')
+
 
 class MainmastSegJob(models.Model):
 
@@ -74,5 +80,5 @@ class MainmastSegJob(models.Model):
     id = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
-    mrc_file = models.FileField('MRC File', upload_to=settings.MEDIA_ROOT, null=True)
+    mrc_file = models.FileField('MRC File', upload_to='mainmastseg', null=True)
     mrc_filename = models.CharField('MRC Filename', max_length=260, default='')
