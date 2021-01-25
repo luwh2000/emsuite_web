@@ -27,7 +27,7 @@ class Emap2SecJob(models.Model):
         verbose_name_plural = 'Emap2Sec Jobs'
         db_table = 'emap2sec'
 
-    id = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
+    uuid = models.UUIDField('UUID', default=uuid.uuid4, primary_key=True)
     name = models.CharField('Job Name', max_length=300, default='')
     comment = models.TextField('Comment', default='', blank=True)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
@@ -48,7 +48,7 @@ class Emap2SecPlusJob(models.Model):
         verbose_name_plural = 'Emap2Sec+ Jobs'
         db_table = 'emap2sec_plus'
 
-    id = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
+    uuid = models.UUIDField('UUID', default=uuid.uuid4, primary_key=True)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
     mrc_file = models.FileField(
@@ -63,7 +63,7 @@ class MainmastJob(models.Model):
         verbose_name_plural = 'MAINMAST Jobs'
         db_table = 'mainmast'
 
-    id = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
+    uuid = models.UUIDField('UUID', default=uuid.uuid4, primary_key=True)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
     mrc_file = models.FileField('MRC File', upload_to='mainmast', null=True)
@@ -77,7 +77,7 @@ class MainmastSegJob(models.Model):
         verbose_name_plural = 'MAINMASTseg Jobs'
         db_table = 'mainmast_seg'
 
-    id = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
+    uuid = models.UUIDField('UUID', default=uuid.uuid4, primary_key=True)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
     mrc_file = models.FileField('MRC File', upload_to='mainmastseg', null=True)
