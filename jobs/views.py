@@ -1,3 +1,7 @@
+import os
+import subprocess
+from pathlib import Path
+
 from django.conf import settings
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -20,6 +24,15 @@ def newJob(confirmUrl, html, request):
             model = form.save(commit=False)
             model.mrc_filename = form.cleaned_data['mrc_file'].name
             model.save()
+
+            BASE_DIR = Path(__file__).resolve().parent.parent
+            subprocess.call(" ".join((
+                "sh",
+                os.path.join(BASE_DIR, "scripts/queue_job.sh"),
+                "emap2sec",
+                str(model.id)
+            )))
+
             return HttpResponseRedirect(reverse(confirmUrl, kwargs={'id': str(model.id)}))
         else:
             pass

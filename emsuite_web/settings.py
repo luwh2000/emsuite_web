@@ -31,7 +31,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEBUG' in os.environ
+DEBUG = os.getenv('DEBUG', 0) != 0
 
 ALLOWED_HOSTS = []
 
