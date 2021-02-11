@@ -2,3 +2,4 @@ django
 dj-database-url
 python-dotenv
 whitenoise
+gunicorn
