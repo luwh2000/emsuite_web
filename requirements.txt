@@ -1,4 +1,4 @@
 django
-gunicorn
-django-heroku
+dj-database-url
 python-dotenv
+whitenoise
