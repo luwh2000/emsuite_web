@@ -27,11 +27,10 @@ def newJob(confirmUrl, html, request):
 
             BASE_DIR = Path(__file__).resolve().parent.parent
             subprocess.call(" ".join((
-                "sh",
                 os.path.join(BASE_DIR, "scripts/queue_job.sh"),
                 "emap2sec",
                 str(model.id)
-            )))
+            )), shell=True)
 
             return HttpResponseRedirect(reverse(confirmUrl, kwargs={'id': str(model.id)}))
         else:

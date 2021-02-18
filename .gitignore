@@ -140,5 +140,9 @@ cython_debug/
 # uploaded files
 media/
 
-# temp files
-tmp/
+# logs
+logs/
+
+# staticfiles
+staticfiles/
+

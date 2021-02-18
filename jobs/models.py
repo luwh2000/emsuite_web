@@ -5,10 +5,11 @@ import uuid
 
 
 STATUSES = (
-    (0, 'Queued'),
-    (1, 'Running'),
-    (2, 'Completed'),
-    (3, 'Failed'),
+    (0, 'Initializing'),
+    (1, 'Queued'),
+    (2, 'Running'),
+    (3, 'Completed'),
+    (4, 'Failed'),
 )
 
 # Create your models here.
@@ -17,9 +18,8 @@ STATUSES = (
 class Emap2SecJob(models.Model):
 
     NORMS = (
-        (0, 'None'),
-        (1, 'Global'),
-        (2, 'Local'),
+        (0, 'Global'),
+        (1, 'Local'),
     )
 
     class Meta:

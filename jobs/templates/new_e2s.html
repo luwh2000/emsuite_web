@@ -49,12 +49,12 @@
         <legend>General</legend>
         <hr>
         <label class="required" data-toggle="tooltip"
-          title="Supported file formats are Situs, CCP4, and MRC2000 (file may be gzipped)">Cryo-EM File</label>
+          title="Supported file formats are Situs and MRC2000 (file may be gzipped)">Cryo-EM File</label>
         <div class="form-group">
           <div class="custom-file">
-            <input class="custom-file-input" type="file" id="mrc_file" name="mrc_file" accept=".mrc,.situs,.ccp4,.gz"
+            <input class="custom-file-input" type="file" id="mrc_file" name="mrc_file" accept=".mrc,.map,.situs,.gz"
               required>
-            <label class="custom-file-label" for="mrc_file">Choose file (.mrc, .situs, .ccp4, .gz)</label>
+            <label class="custom-file-label" for="mrc_file">Choose file (.mrc, .map, .situs, .gz)</label>
             <div class="invalid-feedback">
               Please select a Cryo-EM file (may be gzipped).
             </div>
@@ -76,7 +76,7 @@
         <div class="form-group">
           <label class="required" for="contour" data-toggle="tooltip"
             title="The level of isosurface to generate density values for">Contour Level <small>(c)</small></label>
-          <input class="form-control" type="number" id="contour" name="contour" min="0" value="0" required>
+          <input class="form-control" type="number" step="any" id="contour" name="contour" min="0" value="0" required>
         </div>
         <div class="form-group">
           <label class="required" for="sstep" data-toggle="tooltip"
@@ -96,9 +96,8 @@
             Normalization
             <small>(gnorm/lnorm)</small></label>
           <select class="custom-select" id="norm" name="norm">
-            <option value="0">None</option>
-            <option selected value="1">Global</option>
-            <option value="2">Local</option>
+            <option selected value="0">Global</option>
+            <option value="1">Local</option>
           </select>
         </div>
         <hr>
