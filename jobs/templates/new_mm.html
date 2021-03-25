@@ -35,7 +35,7 @@
       </button>
     </div>
     <div class="container border shadow-sm bg-white py-4 px-5">
-      <form class="needs-validation" action="{% url 'new_emap2sec' %}" method="post" enctype="multipart/form-data"
+      <form class="needs-validation" action="{% url 'new_mainmast' %}" method="post" enctype="multipart/form-data"
         novalidate>
         {% csrf_token %}
         <legend>General</legend>
@@ -43,8 +43,8 @@
         <label class="required" data-toggle="tooltip" title="Choose a Situs file to run MAIMAST on">Cryo-EM File</label>
         <div class="form-group">
           <div class="custom-file">
-            <input class="custom-file-input" type="file" id="situs_file" name="situs_file" accept=".situs" required>
-            <label class="custom-file-label" for="situs_file">Choose file (.situs)</label>
+            <input class="custom-file-input" type="file" id="map_file" name="map_file" accept=".situs" required>
+            <label class="custom-file-label" for="map_file">Choose file (.situs)</label>
             <div class="invalid-feedback">
               Please select a Situs file.
             </div>
@@ -65,7 +65,7 @@
         <hr>
         <legend>
           <small><strong data-toggle="tooltip"
-              title="The mean shift algorithm is used to identify local dense points">LDP
+              title="Identify local dense points using mean shift algorithm">LDP
               Identification</strong></small>
         </legend>
         <div class="form-group">
@@ -73,74 +73,107 @@
             Kernel
             Bandwidth
             <small>(gw)</small></label>
-          <input class="form-control" type="number" id="gw" name="gw" min="0" value="2.0" required>
+          <input class="form-control" type="number" step="any" id="gw" name="gw" min="0" value="2.0" required>
         </div>
         <div class="form-group">
           <label class="required" for="t" data-toggle="tooltip"
             title="Grid points with density &gt; <u>t</u> are selected to be seed points">Grid Point Density Threshold
             <small>(t)</small></label>
-          <input class="form-control" type="number" id="t" name="t" min="0" value="0.0" required>
+          <input class="form-control" type="number" step="any" id="t" name="t" min="0" value="0.0" required>
         </div>
         <div class="form-group">
           <label class="required" for="allow" data-toggle="tooltip"
             title="Maximum shift distance allowed during mean shifting">Maximum Shift
             Distance <small>(allow)</small></label>
-          <input class="form-control" type="number" id="allow" name="allow" min="0" value="10.0" required>
+          <input class="form-control" type="number" step="any" id="allow" name="allow" min="0" value="10.0" required>
         </div>
         <div class="form-group">
           <label class="required" for="filter" data-toggle="tooltip"
             title="Seed points with normalized density below <u>filter</u> are discarded">Seed Point Density Threshold
             <small>(filter)</small></label>
-          <input class="form-control" type="number" id="filter" name="filter" min="0" max="1" value="0.1" required>
+          <input class="form-control" type="number" step="any" id="filter" name="filter" min="0" max="1" value="0.1" required>
         </div>
         <div class="form-group">
           <label class="required" for="merge" data-toggle="tooltip"
             title="Iteratively merge seed points closer than <u>merge</u> &#8491; apart">Merge Threshold
             <small>(merge)</small></label>
-          <input class="form-control" type="number" id="merge" name="merge" min="0" value="0.5" required>
+          <input class="form-control" type="number" step="any" id="merge" name="merge" min="0" value="0.5" required>
         </div>
         <hr>
         <legend>
-          <small><strong data-toggle="tooltip" title="A minimum spanning tree is constructed to connect LDPs">MST
+          <small><strong data-toggle="tooltip" title="Connect LDPs with a minimum spanning tree">MST
               Construction</strong></small>
         </legend>
         <div class="form-group">
-          <label class="required" for="rlocal" data-toggle="tooltip"
+          <label class="required" for="Rlocal" data-toggle="tooltip"
             title="Radius (in &#8491;) of each point's local MST">Local MST Radius <small>(Rlocal)</small></label>
-          <input class="form-control" type="number" id="rlocal" name="rlocal" min="0" value="10" required>
+          <select class="custom-select" id="Rlocal" name="Rlocal">
+            <option selected value="0">{ 10.0 }</option>
+            <option value="1">{ 5.0, 7.5, 10.0 }</option>
+          </select>
         </div>
         <hr>
         <legend>
-          <small><strong data-toggle="tooltip" title="A tabu search">MST
+          <small><strong data-toggle="tooltip" title="Refine tree structures with tabu search">MST
               Refinement</strong></small>
         </legend>
         <div class="form-group">
-          <label class="required" for="nround" data-toggle="tooltip" title="Number of refinement iterations">Iteration
+          <label class="required" for="Nround" data-toggle="tooltip" title="Number of refinement iterations">Iteration
             Count <small>(Nround)</small></label>
-          <input class="form-control" type="number" id="nround" name="nround" min="0" value="5000" required>
+          <input class="form-control" type="number" id="Nround" name="Nround" min="0" value="5000" required>
         </div>
         <div class="form-group">
-          <label class="required" for="nnb" data-toggle="tooltip"
+          <label class="required" for="Nnb" data-toggle="tooltip"
             title="Number of edge replacements tried each iteration">Candidates
             per Iteration <small>(Nnb)</small></label>
-          <input class="form-control" type="number" id="nnb" name="nnb" min="1" value="30" required>
+          <input class="form-control" type="number" id="Nnb" name="Nnb" min="1" value="30" required>
         </div>
         <div class="form-group">
-          <label class="required" for="ntb" data-toggle="tooltip" title="Maximum number of edges in the tabu list">Tabu
+          <label class="required" for="Ntb" data-toggle="tooltip" title="Maximum number of edges in the tabu list">Tabu
             List Size <small>(Ntb)</small></label>
-          <input class="form-control" type="number" id="ntb" name="ntb" min="0" value="100" required>
+          <input class="form-control" type="number" id="Ntb" name="Ntb" min="0" value="100" required>
         </div>
         <div class="form-group">
-          <label class="required" for="dkeep" data-toggle="tooltip"
+          <label class="required" for="Dkeep" data-toggle="tooltip"
             title="Removed edges must have length &gt; <u>Dkeep</u> &#8491;">Edge Length Threshold
             <small>(Dkeep)</small></label>
-          <input class="form-control" type="number" id="dkeep" name="dkeep" min="0" value="0.5" required>
+          <select class="custom-select" id="fw" name="fw">
+            <option selected value="0">{ 0.5 }</option>
+            <option value="1">{ 0.5, 1.0, 1.5 }</option>
+          </select>
         </div>
         <div class="form-group">
           <label class="required" for="Const" data-toggle="tooltip"
             title="New tree must have total length &leq; <u>Const</u> &times; W(MST)">Tree Length Constraint
             <small>(Const)</small></label>
-          <input class="form-control" type="number" id="Const" name="Const" min="0" value="1.01" required>
+          <input class="form-control" type="number" step="any" id="Const" name="Const" min="0" value="1.01" required>
+        </div>
+        <hr>
+        <legend>
+          <small><strong data-toggle="tooltip" title="Thread the sequence on the main-chain path">Threading</strong></small>
+        </legend>
+        <div class="form-group">
+          <label class="required" for="fw" data-toggle="tooltip"
+            title="">Filter Width<small>(fw)</small></label>
+          <select class="custom-select" id="fw" name="fw">
+            <option selected value="0">{ 1.0 }</option>
+            <option value="1">{ 0.9, 1.1, 1.3 }</option>
+            <option value="2">{ 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4 }</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="required" for="Ab" data-toggle="tooltip"
+            title="">Average Bond Length<small>(Ab)</small></label>
+          <select class="custom-select" id="Ab" name="Ab">
+            <option selected value="0">{ 3.5 }</option>
+            <option value="1">{ 3.2, 3.4, 3.6, 3.8 }</option>
+            <option value="2">{ 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8 }</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="required" for="Wb" data-toggle="tooltip"
+            title="">Bond Score Weight<small>(Wb)</small></label>
+          <input class="form-control" type="number" step="any" id="Wb" name="Wb" min="0" value="0.9" required>
         </div>
         <hr>
         <button class="btn btn-primary" type="submit">Submit</button>

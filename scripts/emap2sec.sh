@@ -21,7 +21,7 @@ remote_sh() {
     ssh -i $IDENTITY $USER@$REMOTE "cd $WD; $1"
 }
 
-sql="SELECT mrc_file,contour,sstep,vw,norm FROM emap2sec WHERE id=\"$TRIM_ID\""
+sql="SELECT map_file,contour,sstep,vw,norm FROM emap2sec WHERE id=\"$TRIM_ID\""
 params=$(sqlite3 db.sqlite3 "$sql")
 
 mapfile=$(echo $params | awk -F '|' '{print "media/" $1}')

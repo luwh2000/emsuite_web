@@ -3,6 +3,10 @@ label.required:after {
   color:red;
 }
 
+#logo {
+  height: 2rem;
+}
+
 section {
   padding-top: 72px;
   margin-top: -72px;
@@ -34,3 +38,13 @@ a {
   left: 0;
   right: 0;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+

@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% load job_tags %}
+
+<div class="container py-5">
+    <p class="lead text-muted mb-0">MAINMAST</p>
+    <h1 class="mb-3">{{ job.name }} {% status_badge job.status %}</h1>
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                    aria-controls="collapseOne">
+                    Job details
+                </button>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+            <div class="card-body">
+                {% if job.comment and job.comment.strip %}
+                <p>{{ job.comment }}</p>
+                {% endif %}
+                <dl class="row">
+                    <dt class="col-sm-3">Job ID</dt>
+                    <dd class="col-sm-9">{{ job.id }}</dd>
+
+                    <dt class="col-sm-3">Cryo-EM Map File</dt>
+                    <dd class="col-sm-9"><a href="{{ job.map_file.url }}">{{ job.map_filename }}</a></dd>
+
+                    <dt class="col-sm-3">Submission Time</dt>
+                    {% load tz %}
+                    {% localtime on %}
+                    {% get_current_timezone as TIME_ZONE %}
+                    <dd class="col-sm-9">{{ job.time_sub }} {{ TIME_ZONE }}</dd>
+                    {% endlocaltime %}
+
+                    <dt class="col-sm-3">Gaussian Kernel Bandwidth</dt>
+                    <dd class="col-sm-9">{{ job.gw }}</dd>
+                    <dt class="col-sm-3">Grid Point Density Threshold</dt>
+                    <dd class="col-sm-9">{{ job.t }}</dd>
+                    <dt class="col-sm-3">Maximum Shift Distance</dt>
+                    <dd class="col-sm-9">{{ job.allow }}</dd>
+                    <dt class="col-sm-3">Seed Point Density Threshold</dt>
+                    <dd class="col-sm-9">{{ job.filter }}</dd>
+                    <dt class="col-sm-3">Merge Threshold</dt>
+                    <dd class="col-sm-9">{{ job.merge }}</dd>
+                    <dt class="col-sm-3">Local MST Radius</dt>
+                    <dd class="col-sm-9">{{ job.Rlocal }}</dd>
+                    <dt class="col-sm-3">Iteration Count</dt>
+                    <dd class="col-sm-9">{{ job.Nround }}</dd>
+                    <dt class="col-sm-3">Candidates per Iteration</dt>
+                    <dd class="col-sm-9">{{ job.Nnb }}</dd>
+                    <dt class="col-sm-3">Tabu List Size</dt>
+                    <dd class="col-sm-9">{{ job.Ntb }}</dd>
+                    <dt class="col-sm-3">Edge Length Threshold</dt>
+                    <dd class="col-sm-9">{{ job.Dkeep }}</dd>
+                    <dt class="col-sm-3">Tree Length Constraint</dt>
+                    <dd class="col-sm-9">{{ job.Const }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    Results
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
+            <div class="card-body">
+                {% if job.status == 3 %}
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="viewport"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-primary w-100" href="#" role="button"><i class="fas fa-download"></i> Download
+                            PDB</a>
+                    </div>
+                </div>
+                {% elif job.status == 4 %}
+                <p>
+		            Your job has {% status_badge 4 %}. Please make sure your cryo-EM file is correct, or contact <a href="mailto:dkiharalab@gmail.com">dkiharalab@gmail.com</a> if the issue persists.
+		        </p>
+                {% else %}
+                <p>
+		            Your job is currently {% status_badge job.status %}. Please check back when it is {% status_badge 3 %}.
+		        </p>
+                <button type="button" class="btn btn-outline-success" onClick="window.location.reload();"><i class="fas fa-redo"></i> Refresh page</button>
+		{% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% load static %}
+
+    <script src="{% static 'js/ngl.js' %}"></script>
+    <script>
+
+        const ASPECT_RATIO = 4 / 3;
+        var cw = $('#viewport').width();
+        $('#viewport').css({ 'height': 1 / ASPECT_RATIO * cw + 'px' });
+
+        const viewport = document.getElementById("viewport");
+        var stage = new NGL.Stage(viewport, { backgroundColor: "#212529", ambientColor: "#212529", ambientIntensity: 1, tooltip: false });
+        {% load static %}
+        stage.loadFile("{% get_media_prefix %}mainmast/output/{{ job.id }}.pdb").then(function (component) {
+            component.addRepresentation("backbone", {colorScheme: "residueindex"});
+            component.autoView();
+        });
+    </script>
+
+    {% endblock %}
