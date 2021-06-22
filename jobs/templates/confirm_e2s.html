@@ -14,8 +14,8 @@
         <dt class="col-sm-3">Job ID</dt>
         <dd class="col-sm-9">{{ job.id }}</dd>
 
-        <dt class="col-sm-3">MRC File</dt>
-        <dd class="col-sm-9"><a href="{{ job.mrc_file.url }}">{{ job.mrc_filename }}</a></dd>
+        <dt class="col-sm-3">Cryo-EM File</dt>
+        <dd class="col-sm-9"><a href="{{ job.map_file.url }}">{{ job.map_filename }}</a></dd>
 
         <dt class="col-sm-3">Submission Time</dt>
         {% load tz %}
