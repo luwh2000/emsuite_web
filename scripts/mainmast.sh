@@ -4,10 +4,10 @@ TRIM_ID=$(echo "$1" | tr -cd [:alnum:])
 sql_update_start="UPDATE mainmast SET status=2 WHERE id=\"$TRIM_ID\""
 sqlite3 db.sqlite3 "$sql_update_start"
 
-USER="rluu"
+USER="lu677"
 REMOTE="brown.rcac.purdue.edu"
 IDENTITY="~/.ssh/id_rsa"
-WD="/home/rluu/mainmast"
+WD="/home/lu677/emap2sec"
 
 remote_cp_tx() {
     scp -i $IDENTITY $1 $USER@$REMOTE:$WD/$2

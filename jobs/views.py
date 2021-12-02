@@ -8,13 +8,19 @@ from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
+from django.views import View
+from django.views.generic.base import RedirectView
 
 from .forms import *
 from .models import *
 
 
-def new(request):
+def get(request):
     return render(request, 'new_job.html')
+
+
+def find(request):
+    return render(request, 'find.html')
 
 
 def newJob(confirmUrl, html, formClass, scriptArgument, request):
@@ -35,8 +41,8 @@ def newJob(confirmUrl, html, formClass, scriptArgument, request):
             return HttpResponseRedirect(reverse(confirmUrl, kwargs={'id': str(model.id)}))
         else:
             for field in form:
-              print(field.name)
-              print(field.errors)
+                print(field.name)
+                print(field.errors)
             pass
     else:
         form = formClass()
@@ -53,6 +59,31 @@ def viewJob(html, jobClass, request, id):
     return render(request, html, {'job': job})
 
 
+def findJob(request):
+    type = request.GET.get('type')
+    return render(request, 'find_job.html', {'type': type})
+
+
+def find2view(request):
+    id = request.GET.get('id')
+    type = request.GET.get('type')
+    jobClass = None
+    html = ''
+    if type == 'Emap2Sec':
+        jobClass = Emap2SecJob
+        html = 'view_e2s.html'
+    elif type == 'Emap2Sec+':
+        jobClass = Emap2SecPlusJob
+        html = 'view_e2sp.html'
+    elif type == 'MAINMAST':
+        jobClass = MainmastJob
+        html = 'view_mm.html'
+    elif type == 'MAINMASTseg':
+        jobClass = MainmastSegJob
+        html = 'view_mms.html'
+    return viewJob(html, jobClass, request, id)
+
+
 def newEmap2Sec(request):
     return newJob('confirm_emap2sec', 'new_e2s.html', Emap2SecForm, 'emap2sec', request)
 
@@ -61,12 +92,12 @@ def confirmEmap2Sec(request, id):
     return confirmJob(Emap2SecJob, 'view_emap2sec', 'confirm_e2s.html', request, id)
 
 
-def confirmMainmast(request, id):
-    return confirmJob(MainmastJob, 'view_mainmast', 'confirm_mm.html', request, id)
-
-
 def viewEmap2Sec(request, id):
     return viewJob('view_e2s.html', Emap2SecJob, request, id)
+
+
+def confirmMainmast(request, id):
+    return confirmJob(MainmastJob, 'view_mainmast', 'confirm_mm.html', request, id)
 
 
 def newEmap2SecPlus(request):
@@ -80,6 +111,6 @@ def newMainmast(request):
 def viewMainmast(request, id):
     return viewJob('view_mm.html', MainmastJob, request, id)
 
+
 def newMainmastSeg(request):
     return newJob('confirm_mainmastseg', 'new_mms.html', MainmastSegForm, 'mainmastseg', request)
-

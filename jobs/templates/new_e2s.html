@@ -34,14 +34,14 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <ul class="nav nav-tabs nav-fill">
+    <!-- <ul class="nav nav-tabs nav-fill">
       <li class="nav-item" data-toggle="tooltip" title="Detect secondary structures from a cryo-EM map">
         <a class="nav-link active" href="#">Detect</a>
       </li>
       <li class="nav-item" data-toggle="tooltip" title="Provide a PDB file to evaluate model performance">
         <a class="nav-link" href="#">Evaluate</a>
       </li>
-    </ul>
+    </ul> -->
     <div class="container shadow-sm border-left border-right border-bottom bg-white py-4 px-5">
       <form class="needs-validation" action="{% url 'new_emap2sec' %}" method="post" enctype="multipart/form-data"
         novalidate>
@@ -100,12 +100,35 @@
             <option value="1">Local</option>
           </select>
         </div>
+        <legend>Verification</legend>
+        <hr>
+        <label data-toggle="tooltip"
+          title="This file is for verification purposes only in case you have a solved crystal structure for your map">Solved
+          Crystal Structure File</label>
+        <div class="form-group">
+          <div class="custom-file">
+            <input class="custom-file-input" type="file" id="solved_structure" name="solved_structure" accept=".pdb">
+            <label class="custom-file-label" for="solved_structure">Choose file (.pdb)</label>
+            <div class="invalid-feedback">
+              Please select a solved crystal structure file.
+            </div>
+          </div>
+        </div>
         <hr>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
   </div>
 </div>
+
+
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
 
 <script>
   // enable tooltips

@@ -8,14 +8,13 @@ USER="lu677"
 REMOTE="brown.rcac.purdue.edu"
 IDENTITY="~/.ssh/id_rsa.pub"
 WD="/home/lu677/emsuite/emap2sec"
-SD="/scratch/brown/lu677/emsuite/emap2sec"
 
 remote_cp_tx() {
-    scp $1 $USER@$REMOTE:$SD/$2
+    scp $1 $USER@$REMOTE:$WD/$2
 }
 
 remote_cp_rx() {
-    scp $USER@$REMOTE:$SD/$1 $2
+    scp $USER@$REMOTE:$WD/$1 $2
 }
 
 remote_sh() {
@@ -37,6 +36,8 @@ norm=$(echo $params | awk -F '|' '{print $5}')
 norm_args=("-gnorm" "-lnorm")
 solved_structure=$(echo $params | awk -F '|' '{print "media/" $6}')
 
+echo $mapfile
+echo $filename
 remote_cp_tx $mapfile input/$filename
 remote_cp_tx $solved_structure solved/$solved_filename
 run_command="./run.sh input/$filename output/$1.pdb -c $contour -sstep $sstep -vw $vw ${norm_args[$norm]} solved/$1.pdb verification/$solved_filename $TRIM_ID"

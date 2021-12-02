@@ -32,7 +32,10 @@ class Emap2SecJob(models.Model):
     comment = models.TextField('Comment', default='', blank=True)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
-    map_file = models.FileField('Map File', upload_to='emap2sec', null=True)
+    map_file = models.FileField(
+        'Map File', upload_to='emap2sec/input', null=True)
+    solved_structure = models.FileField(
+        'Solved Crystal Structure', upload_to='emap2sec/solved', null=True, blank=True)
     map_filename = models.CharField('Map Filename', max_length=260, default='')
     contour = models.FloatField('Contour Level', default=0.0)
     sstep = models.PositiveSmallIntegerField('Stride Step', default=2)
@@ -81,6 +84,7 @@ class MainmastJob(models.Model):
     Ntb = models.PositiveIntegerField('Tabu List Size', default=100)
     Rlocal = models.FloatField('Local MST Radius', default=10.0)
     Const = models.FloatField('Tree Length Constraint', default=1.01)
+
 
 class MainmastSegJob(models.Model):
 

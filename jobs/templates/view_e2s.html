@@ -89,14 +89,17 @@
                 </div>
                 {% elif job.status == 4 %}
                 <p>
-		            Your job has {% status_badge 4 %}. Please make sure your cryo-EM file is correct, or contact <a href="mailto:dkiharalab@gmail.com">dkiharalab@gmail.com</a> if the issue persists.
-		        </p>
+                    Your job has {% status_badge 4 %}. Please make sure your cryo-EM file is correct, or contact <a
+                        href="mailto:dkiharalab@gmail.com">dkiharalab@gmail.com</a> if the issue persists.
+                </p>
                 {% else %}
                 <p>
-		            Your job is currently {% status_badge job.status %}. Please check back when it is {% status_badge 3 %}.
-		        </p>
-                <button type="button" class="btn btn-outline-success" onClick="window.location.reload();"><i class="fas fa-redo"></i> Refresh page</button>
-		{% endif %}
+                    Your job is currently {% status_badge job.status %}. Please check back when it is
+                    {% status_badge 3 %}.
+                </p>
+                <button type="button" class="btn btn-outline-success" onClick="window.location.reload();"><i
+                        class="fas fa-redo"></i> Refresh page</button>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -132,7 +135,7 @@
         const viewport = document.getElementById("viewport");
         var stage = new NGL.Stage(viewport, { backgroundColor: "#212529", ambientColor: "#212529", ambientIntensity: 1, tooltip: false });
         {% load static %}
-stage.loadFile("{% get_media_prefix %}emap2sec/output/{{ job.id }}.pdb").then(function (component) {
+        stage.loadFile("{% get_media_prefix %}emap2sec/output/{{ job.id }}.pdb").then(function (component) {
             for (let i = 0; i < 8; i++) {
                 let schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
                     this.atomColor = function (atom) {

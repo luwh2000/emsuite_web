@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="bg-light">
+    <div class="container py-5">
+        <h1 class="display-4">Find a {{ type }} Job</h1>
+        <div class="container shadow-sm border-left border-right border-bottom bg-white py-4 px-5">
+            <form action="{% url 'find2view' %}" class="needs-validation" novalidate>
+                <!-- <label class="required" for="name" data-toggle="tooltip" title="Job ID">Job ID</label> -->
+                <input type="hidden" name="type" value="{{ type }}">
+                <label class="required" for="id">Job ID</label>
+                <input class="form-control" type="text" name="id" required>
+                <div class="invalid-feedback">
+                    Please enter the Job ID.
+                </div>
+                <hr>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // enable tooltips
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{% endblock %}
