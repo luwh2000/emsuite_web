@@ -146,8 +146,5 @@ media/
 # logs
 logs/
 
-# staticfiles
-staticfiles/
-
 #vscode
 .vscode/

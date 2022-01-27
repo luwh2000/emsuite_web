@@ -1,0 +1,46 @@
+label.required:after {
+  content:"*";
+  color:red;
+}
+
+section {
+  padding-top: 72px;
+  margin-top: -72px;
+}
+
+.card-img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.card.card-link {
+  box-shadow: 0 6px 10px rgba(0,0,0,.08);
+  transition: .3s ease;
+}
+
+.card.card-link:hover {
+  transform: scale(1.025);
+  box-shadow: 0 6px 20px rgba(0,0,0,.12);
+}
+
+a {
+  outline: none;
+}
+
+#viewport div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
