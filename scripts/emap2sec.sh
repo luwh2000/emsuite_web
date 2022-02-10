@@ -1,25 +1,28 @@
 #!/bin/bash
+
+#SBATCH --time=24:00:00
+
 # $1 is id(with dashes) of the file
 TRIM_ID=$(echo "$1" | tr -cd [:alnum:])
 sql_update_start="UPDATE emap2sec SET status=2 WHERE id=\"$TRIM_ID\""
 sqlite3 db.sqlite3 "$sql_update_start"
 
-USER="lu677"
+USER="dklab"
 REMOTE="brown.rcac.purdue.edu"
-IDENTITY="~/.ssh/id_rsa.pub"
-WD="/home/lu677/emsuite/emap2sec"
-SD="/scratch/brown/lu677/emsuite/emap2sec"
+IDENTITY="~/.ssh/dklab_rcac_id_ecdsa"
+WD="/depot/dkihara/data/dklab/emsuite/emap2sec"
+SD="/scratch/brown/dklab/emsuite/emap2sec"
 
 remote_cp_tx() {
-    scp $1 $USER@$REMOTE:$SD/$2
+    scp -i $IDENTITY $1 $USER@$REMOTE:$SD/$2
 }
 
 remote_cp_rx() {
-    scp $USER@$REMOTE:$SD/$1 $2
+    scp -i $IDENTITY $USER@$REMOTE:$SD/$1 $2
 }
 
 remote_sh() {
-    ssh $USER@$REMOTE "cd $WD; $1"
+    ssh -i $IDENTITY $USER@$REMOTE "cd $WD; $1"
 }
 sql="SELECT map_file,contour,sstep,vw,norm,solved_structure FROM emap2sec WHERE id=\"$TRIM_ID\""
 params=$(sqlite3 db.sqlite3 "$sql")
@@ -43,7 +46,7 @@ run_command="./run.sh input/$filename output/$1.pdb -c $contour -sstep $sstep -v
 echo $run_command
 remote_sh "$run_command"
 remote_cp_rx output/$1.pdb media/emap2sec/output/$1.pdb
-
+echo "copied"
 if [ -s "media/emap2sec/output/$1.pdb" ]; then
     sql_update_end="UPDATE emap2sec SET status=3 WHERE id=\"$TRIM_ID\""
 else

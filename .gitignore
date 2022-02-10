@@ -1,6 +1,8 @@
 # Please include migrations once we are not in heavy development
 migrations/
 
+emsuite_env.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

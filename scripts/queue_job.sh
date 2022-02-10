@@ -6,7 +6,7 @@
 TRIM_ID=$(echo "$2" | tr -cd [:alnum:])
 
 module load slurm
-sbatch -o logs/$2 scripts/$1.sh $2
+sbatch -o logs/$2 scripts/$1.sh $2 
 
 sql_update="UPDATE $1 SET status=1 WHERE id=\"$TRIM_ID\""
 sqlite3 db.sqlite3 "$sql_update"
