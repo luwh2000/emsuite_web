@@ -1,0 +1,15 @@
+POSSIBLE ISSUES:
+make sure .env file exists (hold enviornmental variables SECRET_KEY and DATABASE_URL)
+chmod 775 db.sqlite3
+mkdir media
+chmod 775 media
+(for permissions)
+
+RUN THE WEBSITE:
+become webdklab
+cd into your own emsuite_web folder
+(cd .. to get to home/)
+
+./emsuite_dklab.sh
+
+
