@@ -46,9 +46,11 @@ class Emap2SecJob(models.Model):
 
 class Emap2SecPlusJob(models.Model):
 
-    NORMS = (
-        (0, 'Global'),
-        (1, 'Local'),
+    TYPES = (
+        (0, 'Simulated (6 Å)'),
+        (1, 'Simulated (6-10 Å)'),
+        (2, 'Simulated (10 Å)'),
+        (3, 'Experimental')
     )
 
     class Meta:
@@ -65,7 +67,7 @@ class Emap2SecPlusJob(models.Model):
     name = models.CharField('Job Name', max_length=300, default='')
     contour = models.FloatField('Contour Level', default=0.0)
     comment = models.TextField('Comment', default='', blank=True)
-    type = models.PositiveSmallIntegerField('Map Type', default=0)
+    type = models.PositiveSmallIntegerField('Map Type', choices=TYPES, default=1)
     resize = models.BooleanField('Resize', default=True)
 
 

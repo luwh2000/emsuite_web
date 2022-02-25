@@ -3,6 +3,7 @@
 {% block content %}
 
 {% load job_tags %}
+{% load emap2secplus_tags %}
 
 <div class="container py-5">
     <h1 class="display-4">Success!</h1>
@@ -27,7 +28,7 @@
         <dd class="col-sm-9">{{ job.contour }}</dd>
 
         <dt class="col-sm-3">Type</dt>
-        <dd class="col-sm-9">{{ job.type }}</dd>
+        <dd class="col-sm-9">{% type_string job %}</dd>
 
         <dt class="col-sm-3">Resize</dt>
         <dd class="col-sm-9">{{ job.resize }}</dd>
