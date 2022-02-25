@@ -13,7 +13,8 @@ class Emap2SecForm(ModelForm):
 class Emap2SecPlusForm(ModelForm):
     class Meta:
         model = Emap2SecPlusJob
-        fields = []
+        fields = ['map_file', 'name', 'comment', 'contour', 'type',
+                  'resize']
 
 
 class MainmastForm(ModelForm):

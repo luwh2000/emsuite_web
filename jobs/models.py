@@ -46,6 +46,11 @@ class Emap2SecJob(models.Model):
 
 class Emap2SecPlusJob(models.Model):
 
+    NORMS = (
+        (0, 'Global'),
+        (1, 'Local'),
+    )
+
     class Meta:
         verbose_name = 'Emap2Sec+ Job'
         verbose_name_plural = 'Emap2Sec+ Jobs'
@@ -57,6 +62,11 @@ class Emap2SecPlusJob(models.Model):
     map_file = models.FileField(
         'Map File', upload_to='emap2secplus', null=True)
     map_filename = models.CharField('Map Filename', max_length=260, default='')
+    name = models.CharField('Job Name', max_length=300, default='')
+    contour = models.FloatField('Contour Level', default=0.0)
+    comment = models.TextField('Comment', default='', blank=True)
+    type = models.PositiveSmallIntegerField('Map Type', default=0)
+    resize = models.BooleanField('Resize', default=True)
 
 
 class MainmastJob(models.Model):

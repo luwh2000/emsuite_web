@@ -26,6 +26,7 @@ def find(request):
 def newJob(confirmUrl, html, formClass, scriptArgument, request):
     if request.method == 'POST':
         form = formClass(request.POST, request.FILES)
+        print(formClass)
         if form.is_valid():
             model = form.save(commit=False)
             model.map_filename = form.cleaned_data['map_file'].name
@@ -85,6 +86,7 @@ def find2view(request):
 
 
 def newEmap2Sec(request):
+    print("Emap2Sec")
     return newJob('confirm_emap2sec', 'new_e2s.html', Emap2SecForm, 'emap2sec', request)
 
 
@@ -101,8 +103,14 @@ def confirmMainmast(request, id):
 
 
 def newEmap2SecPlus(request):
+    print("Emap2SecPlus")
     return newJob('confirm_emap2sec+', 'new_e2sp.html', Emap2SecPlusForm, 'emap2secplus', request)
 
+def confirmEmap2SecPlus(request, id):
+    return confirmJob(Emap2SecPlusJob, 'view_emap2sec+', 'confirm_e2sp.html', request, id)
+
+def viewEmap2SecPlus(request, id):
+    return viewJob('view_e2sp.html', Emap2SecPlusJob, request, id)
 
 def newMainmast(request):
     return newJob('confirm_mainmast', 'new_mm.html', MainmastForm, 'mainmast', request)
