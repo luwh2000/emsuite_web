@@ -62,7 +62,7 @@ class Emap2SecPlusJob(models.Model):
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
     map_file = models.FileField(
-        'Map File', upload_to='emap2secplus', null=True)
+        'Map File', upload_to='emap2secplus\input', null=True)
     map_filename = models.CharField('Map Filename', max_length=260, default='')
     name = models.CharField('Job Name', max_length=300, default='')
     contour = models.FloatField('Contour Level', default=0.0)

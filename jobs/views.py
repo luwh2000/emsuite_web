@@ -104,7 +104,7 @@ def confirmMainmast(request, id):
 
 def newEmap2SecPlus(request):
     print("Emap2SecPlus")
-    return newJob('confirm_emap2sec+', 'new_e2sp.html', Emap2SecPlusForm, 'emap2secplus', request)
+    return newJob('confirm_emap2sec+', 'new_e2sp.html', Emap2SecPlusForm, 'emap2sec_plus', request)
 
 def confirmEmap2SecPlus(request, id):
     return confirmJob(Emap2SecPlusJob, 'view_emap2sec+', 'confirm_e2sp.html', request, id)
