@@ -62,7 +62,7 @@ class Emap2SecPlusJob(models.Model):
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
     map_file = models.FileField(
-        'Map File', upload_to='emap2secplus\input', null=True)
+        'Map File', upload_to='emap2secplus/input', null=True)
     map_filename = models.CharField('Map Filename', max_length=260, default='')
     name = models.CharField('Job Name', max_length=300, default='')
     contour = models.FloatField('Contour Level', default=0.0)
@@ -72,6 +72,32 @@ class Emap2SecPlusJob(models.Model):
 
 
 class MainmastJob(models.Model):
+    EDGE = (
+        (0, '0.5'),
+        (1, '0.5, 1.0, 1.5'),
+    )
+
+    BOND = (
+        (0, '3.5'),
+        (1, '3.2, 3.4, 3.6, 3.8 '),
+        (2, '3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8')
+    )
+
+    DENSITY = (
+        (0, '0.1'),
+        (1, '0.0, 0.1, 0.2, 0.3'),
+    )
+
+    RADIUS = (
+        (0, '10.0'),
+        (1, '5.0, 7.5, 10.0'),
+    )
+
+    FILTER = (
+        (0, '1.0'),
+        (1, '0.9, 1.1, 1.3'),
+        (2, '0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4')
+    )
 
     class Meta:
         verbose_name = 'MAINMAST Job'
@@ -83,20 +109,22 @@ class MainmastJob(models.Model):
     comment = models.TextField('Comment', default='', blank=True)
     time_sub = models.DateTimeField('Submission Time', default=timezone.now)
     status = models.PositiveSmallIntegerField(choices=STATUSES, default=0)
-    map_file = models.FileField('Map File', upload_to='mainmast', null=True)
+    map_file = models.FileField('Map File', upload_to='mainmast/input', null=True)
     map_filename = models.CharField('Map Filename', max_length=260, default='')
     gw = models.FloatField('Gaussian Kernel Bandwidth', default=2.0)
-    Dkeep = models.FloatField('Edge Length Threshold', default=0.5)
+    Dkeep = models.PositiveSmallIntegerField('Edge Length Threshold', choices=EDGE, default=0)
     t = models.FloatField('Grid Point Density Threshold', default=0.0)
     allow = models.FloatField('Maximum Shift Distance', default=10.0)
-    filter = models.FloatField('Seed Point Density Threshold', default=0.1)
+    filter = models.PositiveSmallIntegerField('Seed Point Density Threshold', choices=DENSITY, default=0)
     merge = models.FloatField('Merge Threshold', default=0.5)
     Nround = models.PositiveIntegerField('Number of Iterations', default=5000)
     Nnb = models.PositiveIntegerField('Candidates per Iteration', default=30)
     Ntb = models.PositiveIntegerField('Tabu List Size', default=100)
-    Rlocal = models.FloatField('Local MST Radius', default=10.0)
+    Rlocal = models.PositiveSmallIntegerField('Local MST Radius', choices=RADIUS, default=0)
     Const = models.FloatField('Tree Length Constraint', default=1.01)
-
+    fw = models.PositiveSmallIntegerField('Filter Width', choices=FILTER, default=0)
+    Ab = models.PositiveSmallIntegerField('Average Bond Length', choices=BOND, default=0)
+    Wb = models.FloatField('Bond Score Weight', default=0.9)
 
 class MainmastSegJob(models.Model):
 

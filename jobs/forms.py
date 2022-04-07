@@ -21,7 +21,7 @@ class MainmastForm(ModelForm):
     class Meta:
         model = MainmastJob
         fields = ['map_file', 'name', 'comment', 'gw', 'Dkeep', 't', 'allow',
-                  'filter', 'merge', 'Nround', 'Nnb', 'Ntb', 'Rlocal', 'Const']
+                  'filter', 'merge', 'Nround', 'Nnb', 'Ntb', 'Rlocal', 'Const', 'fw', 'Ab', 'Wb']
 
 
 class MainmastSegForm(ModelForm):

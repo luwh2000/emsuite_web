@@ -1,10 +1,7 @@
 POSSIBLE ISSUES:
 make sure .env file exists (hold enviornmental variables SECRET_KEY and DATABASE_URL)
 change source /apps/miniconda38/etx/profile.d/conda.csh to source /apps/miniconda38/etx/profile.d/conda.sh in emsuite_dklab.sh
-chmod 775 db.sqlite3
-mkdir media
-chmod 775 media
-(for permissions)
+chmod 775 . (for permissions) both webdklab and user
 
 RUN THE WEBSITE:
 become webdklab
