@@ -15,6 +15,11 @@ from .forms import *
 from .models import *
 
 
+import mimetypes
+from wsgiref.util import FileWrapper
+from django.db.models import TextField
+from django.db.models.functions import Cast
+
 def get(request):
     return render(request, 'new_job.html')
 
