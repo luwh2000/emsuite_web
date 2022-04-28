@@ -2,6 +2,8 @@ from django.urls import path
 
 from . import views
 
+from django.conf.urls import url
+
 urlpatterns = [
     path('new/', views.get, name='new_job'),
     path('new/emap2sec/', views.newEmap2Sec, name='new_emap2sec'),
@@ -20,4 +22,5 @@ urlpatterns = [
     path('find/', views.find, name='find'),
     path('find/findJob/', views.findJob, name='find_job'),
     path('find/findjob/find2view/', views.find2view, name='find2view'),
+
 ]

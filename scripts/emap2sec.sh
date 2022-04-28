@@ -10,7 +10,7 @@ sqlite3 db.sqlite3 "$sql_update_start"
 USER="dklab"
 REMOTE="brown.rcac.purdue.edu"
 IDENTITY="~/.ssh/dklab_rcac_id_ecdsa"
-WD="/depot/dkihara/data/dklab/emsuite/emap2sec"
+WD="/depot/dkihara/data/dklab/emsuite/Emap2sec"
 SD="/scratch/brown/dklab/emsuite/emap2sec"
 
 remote_cp_tx() {

@@ -82,9 +82,10 @@
                                     onclick="clickButton(this, 0)" style="background-color: #1aa179">Other</a>
                             </div>
                         </div>
-
-                        <a class="btn btn-primary w-100" href="#" role="button"><i class="fas fa-download"></i> Download
-                            PDB</a>
+                        <!-- {% load static %} -->
+                        <a class="btn btn-primary w-100" href="{% get_media_prefix %}emap2sec/output/{{ job.id }}.pdb"
+                            role="button" download><i class="fas fa-download"></i> Download PDB
+                        </a>
                     </div>
                 </div>
                 {% elif job.status == 4 %}
